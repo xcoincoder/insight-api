@@ -21,9 +21,9 @@
 * [Stake](#stake-statistic)
 * [Total Supply](#total-supply-statistic)
 
-A QTUM blockchain REST and web socket API service for [Qtumcore Node](https://github.com/qtumproject/qtumcore-node).
+A QTEP blockchain REST and web socket API service for [Qtepcore Node](https://github.com/xcoincoder/qtepcore-node).
 
-This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/qtumproject/qtum-explorer.
+This is a backend-only service. If you're looking for the web frontend application, take a look at https://github.com/xcoincoder/qtep-explorer.
 
 ## Getting Started
 
@@ -35,7 +35,7 @@ This is a backend-only service. If you're looking for the web frontend applicati
     ```  
 2. Install mongo https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/  
 
-3. Install qtum https://github.com/qtumproject/qtum - with bitcore and ZMQ ! 
+3. Install qtep https://github.com/xcoincoder/qtep - with bitcore and ZMQ ! 
 
     ```bash
     # with ZMQ
@@ -43,33 +43,33 @@ This is a backend-only service. If you're looking for the web frontend applicati
     # with bitcore
     ./configure --enable-bitcore
     ```  
-4. Install qtumcore-node  
+4. Install qtepcore-node  
 
     ```bash
-    npm i https://github.com/qtumproject/qtumcore-node.git#master
+    npm i https://github.com/xcoincoder/qtepcore-node.git#master
 
-    $(npm bin)/qtumcore-node create mynode
+    $(npm bin)/qtepcore-node create mynode
 
     cd mynode
 
-    $(npm bin)/qtumcore-node install https://github.com/qtumproject/insight-api.git#master
+    $(npm bin)/qtepcore-node install https://github.com/xcoincoder/insight-api.git#master
     ```  
-5. Edit qtumcore-node.json  
+5. Edit qtepcore-node.json  
 
     ```json
     {
       "network": "livenet",
       "port": 3001,
       "services": [
-        "qtumd",
-        "qtum-insight-api",
+        "qtepd",
+        "qtep-insight-api",
         "web"
       ],
       "servicesConfig": {
-        "qtum-insight-api": {
+        "qtep-insight-api": {
           "enableApiLogs": true,
           "enableContractsApiLogs": true,
-          "routePrefix": "qtum-insight-api",
+          "routePrefix": "qtep-insight-api",
           "rateLimiterOptions": {
           "whitelist": [
              "123.456.12.34",
@@ -83,7 +83,7 @@ This is a backend-only service. If you're looking for the web frontend applicati
           "db": {
             "host": "127.0.0.1",
             "port": "27017",
-            "database": "qtum-api-livenet",
+            "database": "qtep-api-livenet",
             "user": "",
             "password": ""
           },
@@ -91,16 +91,16 @@ This is a backend-only service. If you're looking for the web frontend applicati
             "updateFromBlockHeight": 0
           }
         },
-        "qtumd": {
+        "qtepd": {
           "spawn": {
-        	  "datadir": "/home/user/.qtum",
-            "exec": "/home/user/qtum-bitcore/src/qtumd"
+        	  "datadir": "/home/user/.qtep",
+            "exec": "/home/user/qtep-bitcore/src/qtepd"
           }
         }
       }
     }
     ```  
-6. Edit qtum.conf  
+6. Edit qtep.conf  
 
     ```
     server=1
@@ -123,28 +123,28 @@ This is a backend-only service. If you're looking for the web frontend applicati
 7. Run Node  
 
     ```
-    $(npm bin)/qtumcore-node start
+    $(npm bin)/qtepcore-node start
     ```  
 
-8. The API endpoints will be available by default at: `http://localhost:3001/qtum-insight-api/`  
+8. The API endpoints will be available by default at: `http://localhost:3001/qtep-insight-api/`  
 
 ## Add-on Services
 
-There add-on service available to extend the functionality of Qtumcore:
+There add-on service available to extend the functionality of Qtepcore:
 
-- [QTUM Explorer](https://github.com/qtumproject/qtum-explorer)
+- [QTEP Explorer](https://github.com/xcoincoder/qtep-explorer)
 
 ## Prerequisites
 
-**Note:** You can use an existing QTUM data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `qtum.conf`, as well as a few other additional fields.
+**Note:** You can use an existing QTEP data directory, however `txindex`, `addressindex`, `timestampindex` and `spentindex` needs to be set to true in `qtep.conf`, as well as a few other additional fields.
 
 
 ## Query Rate Limit
 
-To protect the server, qtum-insight-api has a built it query rate limiter. It can be configurable in `qtumcore-node.json` with:
+To protect the server, qtep-insight-api has a built it query rate limiter. It can be configurable in `qtepcore-node.json` with:
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "qtep-insight-api": {
       "rateLimiterOptions": {
         "whitelist": ["::ffff:127.0.0.1"]
       }
@@ -155,17 +155,17 @@ To protect the server, qtum-insight-api has a built it query rate limiter. It ca
 Or disabled entirely with:
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "qtep-insight-api": {
       "disableRateLimiter": true
     }
   }
   ```
   
-**Note:** `routePrefix` can be configurable in `qtumcore-node.json` with:
+**Note:** `routePrefix` can be configurable in `qtepcore-node.json` with:
 
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "qtep-insight-api": {
       "routePrefix": "insight-api",
     }
   }
@@ -173,11 +173,11 @@ Or disabled entirely with:
   
 ## Enable / Disable logs
 
- To reduce the load on the server, qtum-insight-api has opportunity to enable / disable logs.
- Both `enableApiLogs` and `enableContractsApiLogs` can be configured in `qtumcore-node.json` with:
+ To reduce the load on the server, qtep-insight-api has opportunity to enable / disable logs.
+ Both `enableApiLogs` and `enableContractsApiLogs` can be configured in `qtepcore-node.json` with:
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "qtep-insight-api": {
       "enableApiLogs": true,
       "enableContractsApiLogs": false
     }
@@ -188,7 +188,7 @@ Or disabled entirely with:
 
 ``` json
   "servicesConfig": {
-    "qtum-insight-api": {
+    "qtep-insight-api": {
        "enableApiLogs": false,
        "enableContractsApiLogs": true
     }
@@ -725,7 +725,7 @@ POST response:
   /insight-api/peer
 ```
 
-### Status of the QTUM Network
+### Status of the QTEP Network
 ```
   /insight-api/status?q=xxx
 ```
